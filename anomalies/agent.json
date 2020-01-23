@@ -1,0 +1,13 @@
+{
+  "cloudwatch.emitMetrics": true,
+  "kinesis.endpoint": "kinesis.eu-west-1.amazonaws.com",
+  "firehose.endpoint": "",
+  
+  "flows": [
+    {
+      "filePattern": "/var/log/readings.txt",
+      "kinesisStream": "remi_data_stream",
+      "partitionKeyOption": "RANDOM"
+    }
+  ]
+}
