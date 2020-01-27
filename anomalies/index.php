@@ -13,15 +13,15 @@ while(!feof($handle)) {
     echo "<td>";
     $color = $buffer1 * 50; 
     echo "<p style=\"background-color: hsl(0, $color%, 50%)\">";
-    echo "$buffer1";
+    echo "$buffer1 with color: $color";
     echo "</td><td>";
     $color = $buffer2 * 30; 
     echo "<p style=\"background-color: hsl(0, $color%, 50%)\">";
-    echo "$buffer2";
+    echo "$buffer2 with color: $color";
     echo "</td><td>";
     $color = $buffer3 * 40; 
     echo "<p style=\"background-color: hsl(0, $color%, 50%)\">";
-    echo "$buffer3";
+    echo "$buffer3 with color: $color";
 
 
     echo "</td>";
