@@ -11,12 +11,12 @@ function hsl_color($input_min, $input_max, $input) {
     return (100 - $output);
 }
 
-echo "<html><head><title>Hey</title><meta http-equiv=\"refresh\" content=\"5\" ></head><body>";
+#echo "<table border=0 >";
 echo "<table width=100% border=0 cellpadding=0 cellspacing=0 >";
 while(!feof($handle)) {
     $buffer1 = (float) fgets($handle);
-    $buffer2 = $buffer1 - 0.1;
-    $buffer3 = $buffer1 - 0.3;
+    $buffer2 = $buffer1 + 0.5;
+    $buffer3 = $buffer1 + 0.8;
  
 
     echo "<tr>"; 
