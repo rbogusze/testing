@@ -1,1 +1,1 @@
-print "ala ma kota"
+print "ala ma kotay"
