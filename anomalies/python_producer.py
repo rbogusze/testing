@@ -39,17 +39,16 @@ while True:
     # looks like there are too many columns, I need to be able to select only handful of them
     line_split = line.split(",")
 
-    columns_interesting = 5
-    print(line_split[2])
-    count = 0
+    columns_interesting = 1000
+    wcount = 0
     small_line = ""
-    while count < columns_interesting:
+    while wcount < columns_interesting:
         small_line = small_line + "," + line_split[count]
-        count += 1
+        wcount += 1
 
     # remove first comma
     small_line = small_line[1:]
-    print(small_line)
+    #print(small_line)
     
     # send it to Kinesis
     #k.send(line)
@@ -63,7 +62,7 @@ while True:
         break
     #print("Line{}: {}".format(count, line.strip())) 
     #print("Line{}: {}".format(count, line)) 
-    print("Line{}: {}".format(count, small_line)) 
+    #print("Line{}: {}".format(count, small_line)) 
     print("Sending line {}".format(count)) 
     #break
   
