@@ -43,7 +43,7 @@ while True:
     wcount = 0
     small_line = ""
     while wcount < columns_interesting:
-        small_line = small_line + "," + line_split[count]
+        small_line = small_line + "," + line_split[wcount]
         wcount += 1
 
     # remove first comma
@@ -62,7 +62,7 @@ while True:
         break
     #print("Line{}: {}".format(count, line.strip())) 
     #print("Line{}: {}".format(count, line)) 
-    #print("Line{}: {}".format(count, small_line)) 
+    print("Line{}: {}".format(count, small_line)) 
     print("Sending line {}".format(count)) 
     #break
   
