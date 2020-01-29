@@ -39,7 +39,7 @@ while True:
     # looks like there are too many columns, I need to be able to select only handful of them
     line_split = line.split(",")
 
-    columns_interesting = 1000
+    columns_interesting = 10
     wcount = 0
     small_line = ""
     while wcount < columns_interesting:
