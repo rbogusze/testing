@@ -1,5 +1,6 @@
 from kinesis_producer import KinesisProducer
 
+import time
 import logging
 logging.basicConfig()
 logger = logging.getLogger('logger')
@@ -17,10 +18,34 @@ config = dict(
 
 k = KinesisProducer(config=config)
 
-records = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana']
+# read from array
+#records = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana']
+#for record in records:
+#    k.send(record)
 
-for record in records:
-    k.send(record)
+# read from file
+file1 = open('/var/log/readings.txt', 'r') 
+count = 0
+
+while True: 
+    count += 1
+  
+    # Get next line from file 
+    line = file1.readline() 
+    
+    # send it to Kinesis
+    k.send(line)
+
+    time.sleep(1)
+  
+    # if line is empty 
+    # end of file is reached 
+    if not line: 
+        break
+    #print("Line{}: {}".format(count, line.strip())) 
+    print("Line{}: {}".format(count, line)) 
+  
+file1.close() 
 
 k.close()
 k.join()
