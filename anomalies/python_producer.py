@@ -24,7 +24,7 @@ k = KinesisProducer(config=config)
 #    k.send(record)
 
 # read from file
-file1 = open('/var/log/readings.txt', 'r') 
+file1 = open('/home/ec2-user/result.csv', 'r') 
 count = 0
 
 while True: 
@@ -32,9 +32,28 @@ while True:
   
     # Get next line from file 
     line = file1.readline() 
+
+    # replace comma ',' with space ' '
+    # line = line.replace(",", " ")
+
+    # looks like there are too many columns, I need to be able to select only handful of them
+    line_split = line.split(",")
+
+    columns_interesting = 5
+    print(line_split[2])
+    count = 0
+    small_line = ""
+    while count < columns_interesting:
+        small_line = small_line + "," + line_split[count]
+        count += 1
+
+    # remove first comma
+    small_line = small_line[1:]
+    print(small_line)
     
     # send it to Kinesis
-    k.send(line)
+    #k.send(line)
+    k.send(small_line)
 
     time.sleep(1)
   
@@ -43,7 +62,10 @@ while True:
     if not line: 
         break
     #print("Line{}: {}".format(count, line.strip())) 
-    print("Line{}: {}".format(count, line)) 
+    #print("Line{}: {}".format(count, line)) 
+    print("Line{}: {}".format(count, small_line)) 
+    print("Sending line {}".format(count)) 
+    #break
   
 file1.close() 
 
