@@ -1,0 +1,33 @@
+{
+    "ApplicationName": "cadabra1", 
+    "CurrentApplicationVersionId": 1, 
+    "Input": {
+        "NamePrefix": "SOURCE_SQL_STREAM", 
+        "KinesisStreamsInput": {
+            "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/ala_ma_kota", 
+            "RoleARN": "arn:aws:iam::172748671118:role/service-role/kinesis-analytics-cadabra10-eu-west-1"
+        }, 
+        "InputParallelism": {
+            "Count": 1
+        }, 
+        "InputSchema": {
+            "RecordFormat": {
+                "RecordFormatType": "CSV", 
+                "MappingParameters": {
+                    "CSVMappingParameters": {
+                        "RecordRowDelimiter": "\n", 
+                        "RecordColumnDelimiter": ","
+                    }
+                }
+            }, 
+            "RecordEncoding": "UTF-8", 
+            "RecordColumns": [
+                {
+                    "Name": "COL0", 
+                    "Mapping": "", 
+                    "SqlType": "DOUBLE"
+                }
+            ]
+        }
+    }
+}
