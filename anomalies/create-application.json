@@ -1,0 +1,65 @@
+{
+    "ApplicationName": "cadabra2", 
+    "ApplicationDescription": "", 
+    "Inputs": [
+        {
+            "NamePrefix": "SOURCE_SQL_STREAM", 
+            "KinesisStreamsInput": {
+                "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/ala_ma_kota", 
+                "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
+            }, 
+            "InputParallelism": {
+                "Count": 1
+            }, 
+            "InputSchema": {
+                "RecordFormat": {
+                    "RecordFormatType": "CSV", 
+                    "MappingParameters": {
+                        "CSVMappingParameters": {
+                            "RecordRowDelimiter": "\n", 
+                            "RecordColumnDelimiter": ","
+                        }
+                    }
+                }, 
+                "RecordEncoding": "UTF-8", 
+                "RecordColumns": [
+                    {
+                        "Name": "COL0", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL1", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL2", 
+                        "SqlType": "DOUBLE"
+                    }
+                ]
+            }
+        }
+    ], 
+    "Outputs": [
+        {
+            "Name": "anomaly_output_stream", 
+            "KinesisStreamsOutput": {
+                "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/anomaly_output_stream", 
+                "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
+            }, 
+            "DestinationSchema": {
+                "RecordFormatType": "CSV"
+            }
+        }
+    ], 
+    "ApplicationCode": "-- ** Anomaly detection **\n-- Compute an anomaly score for each record in the source stream using Random Cut Forest\n-- Creates a temporary stream and defines a schema\nCREATE OR REPLACE STREAM \"TEMP_STREAM\" (\n   \"column1\"        DOUBLE,\n   \"column2\"        DOUBLE,\n   \"column3\"        DOUBLE,\n   \"ANOMALY_SCORE\"  DOUBLE);\n-- Creates an output stream and defines a schema\nCREATE OR REPLACE STREAM \"DESTINATION_SQL_STREAM\" (\n   \"column1\"        DOUBLE,\n   \"column2\"        DOUBLE,\n   \"column3\"        DOUBLE,\n   \"ANOMALY_SCORE\"  DOUBLE);\n \n-- Compute an anomaly score for each record in the source stream\n-- using Random Cut Forest\nCREATE OR REPLACE PUMP \"STREAM_PUMP\" AS INSERT INTO \"TEMP_STREAM\"\nSELECT STREAM \"COL0\", \"COL1\", \"COL2\", \"ANOMALY_SCORE\" FROM\n  TABLE(RANDOM_CUT_FOREST(\n    CURSOR(SELECT STREAM * FROM \"SOURCE_SQL_STREAM_001\")\n  )\n);\n-- Sort records by descending anomaly score, insert into output stream\nCREATE OR REPLACE PUMP \"OUTPUT_PUMP\" AS INSERT INTO \"DESTINATION_SQL_STREAM\"\nSELECT STREAM * FROM \"TEMP_STREAM\"\nORDER BY FLOOR(\"TEMP_STREAM\".ROWTIME TO SECOND), ANOMALY_SCORE DESC;\n", 
+    "Tags": [
+        {
+            "Key": "Responsible", 
+            "Value": "Sokalszczuk"
+        },
+        {
+            "Key": "Project", 
+            "Value": "SPM"
+        }
+    ]
+}
