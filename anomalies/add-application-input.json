@@ -26,7 +26,16 @@
                     "Name": "COL0", 
                     "Mapping": "", 
                     "SqlType": "DOUBLE"
-                }
+                },
+                {
+                    "SqlType": "DOUBLE", 
+                    "Name": "COL1"
+                }, 
+                {
+                    "SqlType": "DOUBLE", 
+                    "Name": "COL2"
+                } 
+
             ]
         }
     }
