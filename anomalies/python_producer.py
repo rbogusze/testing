@@ -13,7 +13,7 @@ config = dict(
     kinesis_concurrency=1,
     kinesis_max_retries=10,
     record_delimiter='\n',
-    stream_name='remi_data_stream',
+    stream_name='ala_ma_kota',
     )
 
 k = KinesisProducer(config=config)
@@ -39,7 +39,7 @@ while True:
     # looks like there are too many columns, I need to be able to select only handful of them
     line_split = line.split(",")
 
-    columns_interesting = 100
+    columns_interesting = 30
     wcount = 0
     small_line = ""
     while wcount < columns_interesting:

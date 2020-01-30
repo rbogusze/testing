@@ -5,7 +5,7 @@
         "NamePrefix": "SOURCE_SQL_STREAM", 
         "KinesisStreamsInput": {
             "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/ala_ma_kota", 
-            "RoleARN": "arn:aws:iam::172748671118:role/service-role/kinesis-analytics-cadabra10-eu-west-1"
+            "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
         }, 
         "InputParallelism": {
             "Count": 1
