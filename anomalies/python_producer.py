@@ -13,7 +13,7 @@ config = dict(
     kinesis_concurrency=1,
     kinesis_max_retries=10,
     record_delimiter='\n',
-    stream_name='ala_ma_kota',
+    stream_name='anomaly_output_stream',
     )
 
 k = KinesisProducer(config=config)
@@ -55,7 +55,7 @@ while True:
     #k.send(line)
     k.send(small_line)
 
-    time.sleep(1)
+    time.sleep(3)
   
     # if line is empty 
     # end of file is reached 
