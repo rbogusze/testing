@@ -23,6 +23,7 @@ def create_kinesis_analytics(analytics_name, stream_name):
     # prepare template
     os.system("cat create-application.json | sed -e 's/ala_ma_kota/" + stream_name + "/' | sed -e 's/cadabra1/"+ analytics_name + "/' > trash_template.json")
     os.system("aws kinesisanalytics create-application --cli-input-json file://trash_template.json")
+    os.system("aws kinesisanalytics start-application --application-name " + analytics_name + " --input-configurations Id=1.1,InputStartingPositionConfiguration={InputStartingPosition=NOW}")
     
 
 def push_data_to_stream(sname, stream_data):
