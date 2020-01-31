@@ -1,5 +1,5 @@
 {
-    "ApplicationName": "cadabra2", 
+    "ApplicationName": "cadabra1", 
     "ApplicationDescription": "", 
     "Inputs": [
         {
@@ -41,7 +41,7 @@
     ], 
     "Outputs": [
         {
-            "Name": "anomaly_output_stream", 
+            "Name": "DESTINATION_SQL_STREAM", 
             "KinesisStreamsOutput": {
                 "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/anomaly_output_stream", 
                 "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
