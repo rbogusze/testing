@@ -25,7 +25,30 @@ def create_kinesis_analytics(analytics_name, stream_name):
     os.system("aws kinesisanalytics create-application --cli-input-json file://trash_template.json")
     
 
-     
+def push_data_to_stream(sname, stream_data):
+    print("Pushing data to: {}".format(sname))
+    config = dict(
+        aws_region='eu-west-1',
+        buffer_size_limit=100000,
+        buffer_time_limit=0.2,
+        kinesis_concurrency=1,
+        kinesis_max_retries=10,
+        record_delimiter='\n',
+        stream_name=sname,
+    )
+
+    #print(config)
+
+    k = KinesisProducer(config=config)
+    k.send(stream_data)
+    k.close()
+    k.join()
+
+
+# tmp
+#small_line = "ala ma kota a kot ma ale"     
+#push_data_to_stream("anomaly_input_stream0",small_line)
+#exit()
 
 # declare a list that will store streams
 nr_stream = 0
@@ -37,26 +60,12 @@ for nr_stream in range(0,nr_streams):
     create_kinesis_data_stream(name_stream)
     print("Creating Kinesis analytics for: {}".format(name_analytics))
     create_kinesis_analytics(name_analytics, name_stream)
-    exit() 
-
 
 print("Creating Kinesis stream: anomaly_output_stream")
 create_kinesis_data_stream("anomaly_output_stream")
 
-exit()
+#exit()
 #------------------
-
-config = dict(
-    aws_region='eu-west-1',
-    buffer_size_limit=100000,
-    buffer_time_limit=0.2,
-    kinesis_concurrency=1,
-    kinesis_max_retries=10,
-    record_delimiter='\n',
-    stream_name='remi_data_stream',
-    )
-
-k = KinesisProducer(config=config)
 
 # read from array
 #records = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana']
@@ -79,22 +88,33 @@ while True:
     # looks like there are too many columns, I need to be able to select only handful of them
     line_split = line.split(",")
 
-    columns_interesting = 100
+    columns_interesting = 30
     wcount = 0
-    small_line = ""
-    while wcount < columns_interesting:
-        small_line = small_line + "," + line_split[wcount]
-        wcount += 1
+    nr_stream = 0
+    name_stream = ""
+    for nr_stream in range(0,nr_streams):
+        #print(nr_stream, nr_streams)
+        #print("Working for: {}".format(nr_stream))
+        name_stream = ("anomaly_input_stream" + str(nr_stream))
+        small_line = ""
+        while wcount < columns_interesting:
+            small_line = small_line + "," + line_split[wcount]
+            wcount += 1
 
-    # remove first comma
-    small_line = small_line[1:]
-    #print(small_line)
+        # remove first comma
+        small_line = small_line[1:]
+        #print(small_line)
     
-    # send it to Kinesis
-    #k.send(line)
-    k.send(small_line)
+        # send it to Kinesis
+        push_data_to_stream(name_stream,small_line)
+        #print("Variables after the push")
+        #print(wcount,columns_interesting)
+        columns_interesting += 30
 
-    time.sleep(1)
+    #print("User exit")
+    #exit()
+
+    #time.sleep(1)
   
     # if line is empty 
     # end of file is reached 
@@ -102,11 +122,9 @@ while True:
         break
     #print("Line{}: {}".format(count, line.strip())) 
     #print("Line{}: {}".format(count, line)) 
-    print("Line{}: {}".format(count, small_line)) 
+    #print("Line{}: {}".format(count, small_line)) 
     print("Sending line {}".format(count)) 
     #break
   
 file1.close() 
 
-k.close()
-k.join()
