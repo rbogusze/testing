@@ -41,6 +41,7 @@ while True:
 
     columns_interesting = 30
     wcount = 0
+    #small_line = "id1"
     small_line = ""
     while wcount < columns_interesting:
         small_line = small_line + "," + line_split[wcount]

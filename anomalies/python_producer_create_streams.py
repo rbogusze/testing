@@ -18,6 +18,7 @@ def create_kinesis_data_stream(stream_name):
 
 
 create_kinesis_data_stream("ala_ma_kota")
+create_kinesis_data_stream("anomaly_output_stream")
 
 exit()
 #------------------

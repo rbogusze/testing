@@ -1,5 +1,5 @@
 {
-    "ApplicationName": "cadabra1", 
+    "ApplicationName": "cadabra2", 
     "ApplicationDescription": "", 
     "Inputs": [
         {
@@ -33,6 +33,114 @@
                     },
                     {
                         "Name": "COL2", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL3", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL4", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL5", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL6", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL7", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL8", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL9", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL10", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL11", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL12", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL13", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL14", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL15", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL16", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL17", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL18", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL19", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL20", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL21", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL22", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL23", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL24", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL25", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL26", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL27", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL28", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL29", 
                         "SqlType": "DOUBLE"
                     }
                 ]
