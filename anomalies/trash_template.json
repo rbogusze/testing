@@ -1,0 +1,173 @@
+{
+    "ApplicationName": "anomaly_analytics0", 
+    "ApplicationDescription": "", 
+    "Inputs": [
+        {
+            "NamePrefix": "SOURCE_SQL_STREAM", 
+            "KinesisStreamsInput": {
+                "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/anomaly_input_stream0", 
+                "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
+            }, 
+            "InputParallelism": {
+                "Count": 1
+            }, 
+            "InputSchema": {
+                "RecordFormat": {
+                    "RecordFormatType": "CSV", 
+                    "MappingParameters": {
+                        "CSVMappingParameters": {
+                            "RecordRowDelimiter": "\n", 
+                            "RecordColumnDelimiter": ","
+                        }
+                    }
+                }, 
+                "RecordEncoding": "UTF-8", 
+                "RecordColumns": [
+                    {
+                        "Name": "COL0", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL1", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL2", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL3", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL4", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL5", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL6", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL7", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL8", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL9", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL10", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL11", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL12", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL13", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL14", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL15", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL16", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL17", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL18", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL19", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL20", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL21", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL22", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL23", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL24", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL25", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL26", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL27", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL28", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL29", 
+                        "SqlType": "DOUBLE"
+                    }
+                ]
+            }
+        }
+    ], 
+    "Outputs": [
+        {
+            "Name": "DESTINATION_SQL_STREAM", 
+            "KinesisStreamsOutput": {
+                "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/anomaly_output_stream", 
+                "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
+            }, 
+            "DestinationSchema": {
+                "RecordFormatType": "CSV"
+            }
+        }
+    ], 
+    "ApplicationCode": "-- ** Anomaly detection **\r\n-- Compute an anomaly score for each record in the source stream using Random Cut Forest\r\n-- Creates a temporary stream and defines a schema\r\nCREATE OR REPLACE STREAM \"TEMP_STREAM\" (\r\n   \"column1\"        DOUBLE,\r\n   \"column2\"        DOUBLE,\r\n   \"column3\"        DOUBLE,\r\n   \"column4\"        DOUBLE,\r\n   \"column5\"        DOUBLE,\r\n   \"column6\"        DOUBLE,\r\n   \"column7\"        DOUBLE,\r\n   \"column8\"        DOUBLE,\r\n   \"column9\"        DOUBLE,\r\n   \"column10\"        DOUBLE,\r\n   \"column11\"        DOUBLE,\r\n   \"column12\"        DOUBLE,\r\n   \"column13\"        DOUBLE,\r\n   \"column14\"        DOUBLE,\r\n   \"column15\"        DOUBLE,\r\n   \"column16\"        DOUBLE,\r\n   \"column17\"        DOUBLE,\r\n   \"column18\"        DOUBLE,\r\n   \"column19\"        DOUBLE,\r\n   \"column20\"        DOUBLE,\r\n   \"column21\"        DOUBLE,\r\n   \"column22\"        DOUBLE,\r\n   \"column23\"        DOUBLE,\r\n   \"column24\"        DOUBLE,\r\n   \"column25\"        DOUBLE,\r\n   \"column26\"        DOUBLE,\r\n   \"column27\"        DOUBLE,\r\n   \"column28\"        DOUBLE,\r\n   \"column29\"        DOUBLE,\r\n   \"column30\"        DOUBLE,\r\n   \"ANOMALY_SCORE\"  DOUBLE);\r\n-- Creates an output stream and defines a schema\r\nCREATE OR REPLACE STREAM \"DESTINATION_SQL_STREAM\" (\r\n   \"ANOMALY_SCORE\"  DOUBLE);\r\n\r\n-- Compute an anomaly score for each record in the source stream\r\n-- using Random Cut Forest\r\nCREATE OR REPLACE PUMP \"STREAM_PUMP\" AS INSERT INTO \"TEMP_STREAM\"\r\nSELECT STREAM \"COL0\",\"COL1\", \"COL2\", \"COL3\", \"COL4\", \"COL5\", \"COL6\", \"COL7\", \"COL8\", \"COL9\", \"COL10\", \"COL11\", \"COL12\", \"COL13\", \"COL14\", \"COL15\", \"COL16\", \"COL17\", \"COL18\", \"COL19\", \"COL20\", \"COL21\", \"COL22\", \"COL23\", \"COL24\", \"COL25\", \"COL26\", \"COL27\", \"COL28\", \"COL29\", \"ANOMALY_SCORE\" FROM\r\n  TABLE(RANDOM_CUT_FOREST(\r\n    CURSOR(SELECT STREAM * FROM \"SOURCE_SQL_STREAM_001\")\r\n  )\r\n);\r\n-- Sort records by descending anomaly score, insert into output stream\r\nCREATE OR REPLACE PUMP \"OUTPUT_PUMP\" AS INSERT INTO \"DESTINATION_SQL_STREAM\"\r\nSELECT STREAM \"ANOMALY_SCORE\" FROM \"TEMP_STREAM\"\r\nORDER BY FLOOR(\"TEMP_STREAM\".ROWTIME TO SECOND), ANOMALY_SCORE DESC;\n",
+    "Tags": [
+        {
+            "Key": "Responsible", 
+            "Value": "Sokalszczuk"
+        },
+        {
+            "Key": "Project", 
+            "Value": "SPM"
+        }
+    ]
+}
