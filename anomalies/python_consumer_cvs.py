@@ -9,7 +9,7 @@ logger = logging.getLogger('logger')
 
 the_file = open("/tmp/data_from_stream.txt", "a+")
 
-nr_columns_in_row = 3
+nr_columns_in_row = 10
 nr_counter = 1
 
 consumer = KinesisConsumer(stream_name=str(sys.argv[1]))

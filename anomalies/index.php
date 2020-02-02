@@ -16,7 +16,8 @@ function print_cell($piece, $color) {
     echo "<td>";
 
     echo "<p style=\"background-color: hsl(0, $color%, 50%)\">";
-    echo "$piece with color: $color";
+    #echo "$piece with color: $color";
+    echo "a";
 
     echo "</td>";
 }

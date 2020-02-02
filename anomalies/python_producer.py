@@ -24,7 +24,8 @@ k = KinesisProducer(config=config)
 #    k.send(record)
 
 # read from file
-file1 = open('/home/ec2-user/result.csv', 'r') 
+#file1 = open('/home/ec2-user/result.csv', 'r') 
+file1 = open('/home/ec2-user/anomaly_output_stream.txt', 'r') 
 count = 0
 
 while True: 
@@ -39,7 +40,7 @@ while True:
     # looks like there are too many columns, I need to be able to select only handful of them
     line_split = line.split(",")
 
-    columns_interesting = 30
+    columns_interesting = 1
     wcount = 0
     #small_line = "id1"
     small_line = ""
@@ -55,7 +56,7 @@ while True:
     #k.send(line)
     k.send(small_line)
 
-    time.sleep(3)
+    #time.sleep(1)
   
     # if line is empty 
     # end of file is reached 
