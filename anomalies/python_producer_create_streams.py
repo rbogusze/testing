@@ -8,7 +8,7 @@ logger = logging.getLogger('logger')
 #logger.warning('this is a log message')
 
 # global variables
-nr_streams = 3
+nr_streams = 50
 
 #-------------------
 # First I need to be able to create a Kinesis Data Stream from API
