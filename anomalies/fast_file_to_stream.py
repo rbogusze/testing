@@ -17,7 +17,7 @@ config = dict(
     kinesis_concurrency=1,
     kinesis_max_retries=10,
     record_delimiter='\n',
-    stream_name='anomaly_output_stream',
+    stream_name=str(sys.argv[2]),
     )
 
 k = KinesisProducer(config=config)
