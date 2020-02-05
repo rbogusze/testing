@@ -16,7 +16,7 @@ config = dict(
     buffer_time_limit=0.2,
     kinesis_concurrency=1,
     kinesis_max_retries=10,
-    record_delimiter='\n',
+    record_delimiter='',
     stream_name=str(sys.argv[2]),
     )
 
