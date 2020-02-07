@@ -22,7 +22,7 @@ config = dict(
 
 k = KinesisProducer(config=config)
 consumer = KinesisConsumer(stream_name=str(sys.argv[1]))
-nr_columns_in_row = 3
+nr_columns_in_row = 30
 nr_counter = 1
 line_to_send = ""
 for message in consumer:

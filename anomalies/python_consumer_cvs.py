@@ -38,7 +38,7 @@ for message in consumer:
             nr_counter = 1
             print "flush writing to file /tmp/data_from_stream.txt"
             the_file.flush()
-            time.sleep(1)
+            #time.sleep(1)
 
 
 the_file.close()
