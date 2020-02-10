@@ -23,6 +23,9 @@ size_count = 0
 sum_sum = 0
 anomaly_list = []
 
+def ring_the_bell(anomaly_list_sum,sum_treshold):
+    print("Inside ring_the_bell")
+
 for message in consumer:
     #print "Received message: {0}".format(message)
     print (message["Data"])
@@ -48,11 +51,11 @@ for message in consumer:
         print "Add element to the list"
         anomaly_list.append(current_reading)
         anomaly_list_sum = sum(anomaly_list)
-        print "Sum of the elements in the list: {0}".format(anomaly_list_sum)
+        print "Sum of the elements in the list: {0} treshold: {1}".format(anomaly_list_sum,sum_treshold)
         if anomaly_list_sum > sum_treshold:
             print "WULF"
             print "WULF"
             print "WULF"
+            ring_the_bell(anomaly_list_sum,sum_treshold)
 
     
-
