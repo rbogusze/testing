@@ -6,6 +6,8 @@ from kinesis.consumer import KinesisConsumer
 
 import sys
 import logging
+import requests
+
 logging.basicConfig()
 logger = logging.getLogger('logger')
 logger.warning('this is a log message')
@@ -25,6 +27,23 @@ anomaly_list = []
 
 def ring_the_bell(anomaly_list_sum,sum_treshold):
     print("Inside ring_the_bell")
+
+    headers = {
+    'Content-type': 'application/json',
+    'accessToken': '01434a2cf22b7670d3a4976e91f35b9d3963451c'
+    }
+
+    if (anomaly_list_sum - sum_treshold) > 2:
+        data = '{"subject": "Anomaly detected", "issue": "Issue Example", "priority": "5e341175c76e840021fc1931", "type": "5e34116e490fba0011e24a3f", "group": "5e3422d4c76e840021fc193d"}'
+    elif (anomaly_list_sum - sum_treshold) > 1:
+        data = '{"subject": "Anomaly detected", "issue": "Issue Example", "priority": "5e341175c76e840021fc1930", "type": "5e34116e490fba0011e24a3f", "group": "5e3422d4c76e840021fc193d"}'
+    else:
+        data = '{"subject": "Anomaly detected", "issue": "Issue Example", "priority": "5e341175c76e840021fc192f", "type": "5e34116e490fba0011e24a3f", "group": "5e3422d4c76e840021fc193d"}'
+
+
+    response = requests.post('http://ec2-18-203-87-0.eu-west-1.compute.amazonaws.com/api/v1/tickets/create', headers=headers, data=data)
+    print (response)
+
 
 for message in consumer:
     #print "Received message: {0}".format(message)
