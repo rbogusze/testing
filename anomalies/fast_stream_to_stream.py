@@ -12,7 +12,7 @@ logger = logging.getLogger('logger')
 
 config = dict(
     aws_region='eu-west-1',
-    buffer_size_limit=100000,
+    buffer_size_limit=500,
     buffer_time_limit=0.2,
     kinesis_concurrency=1,
     kinesis_max_retries=10,
@@ -53,6 +53,8 @@ for message in consumer:
             print "sending to " + str(sys.argv[2]) + ":" + str(line_to_send)
             k.send(line_to_send)
             line_to_send = ""
+            # tmp
+            time.sleep(0.1)
 
 k.close()
 k.join()

@@ -40,6 +40,9 @@ while True:
 
     # send it to Kinesis
     k.send(line)
+
+    print("Sleeping.")
+    time.sleep(1)
   
 file1.close() 
 

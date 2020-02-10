@@ -17,12 +17,10 @@ print(dir(consumer))
 message_count = 1
 for message in consumer:
     #print "Received message: {0}".format(message)
-    #print (message["Data"])
+    print (message["Data"])
     string = message["Data"]
-    lst = string.split(",")
-    stringcount = len(lst)
     commacount = string.count(',')
     endlinecount = string.count('\n')
-    print "Message: {0}, there are: {1} elements in one message; comma count: {2} endline count: {3}".format(message_count,stringcount,commacount,endlinecount)
+    print "Message: {0}, comma count: {1} endline count: {2}".format(message_count,commacount,endlinecount)
     message_count += 1 
 

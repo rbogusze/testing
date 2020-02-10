@@ -24,7 +24,7 @@ function print_cell($piece, $color) {
 }
 
 $counter = 1;
-$nr_columns_in_a_row = 30;
+$nr_columns_in_a_row = 58;
 echo "<html><head><title>Hey</title><meta http-equiv=\"refresh\" content=\"5\" ></head><body>";
 echo "<table width=100% border=0 cellpadding=0 cellspacing=0 >";
 echo "<tr>"; 

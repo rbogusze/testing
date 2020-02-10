@@ -10,7 +10,8 @@ logger = logging.getLogger('logger')
 
 the_file = open("/tmp/data_from_stream.txt", "a+")
 
-nr_columns_in_row = 30
+# Do not increase that, you control nr of columns displayed in index.php now.
+nr_columns_in_row = 1
 nr_counter = 1
 
 consumer = KinesisConsumer(stream_name=str(sys.argv[1]))
