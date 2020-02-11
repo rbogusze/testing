@@ -88,12 +88,12 @@ for message in consumer:
         anomaly_list.append(current_reading)
         anomaly_list_sum = sum(anomaly_list)
         #print "Sum of the elements in the list: {0} treshold: {1}".format(anomaly_list_sum,sum_treshold)
-        print "Sum of the elements in the list: {0} treshold: {1}".format(anomaly_list_sum,sum_treshold)
+        print "Current score: {0}, List size of: {1}/{2}, Sum of the list: {3} treshold: {4}".format(current_reading,len(anomaly_list),size_treshold,round(anomaly_list_sum),sum_treshold)
         if anomaly_list_sum > sum_treshold:
             print "WULF"
             print "WULF"
             print "WULF"
             #ring_the_bell(anomaly_list_sum,sum_treshold)
-            ring_the_bell_with_backoff(anomaly_list_sum,sum_treshold)
+            #ring_the_bell_with_backoff(anomaly_list_sum,sum_treshold)
 
     
