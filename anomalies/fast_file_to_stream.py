@@ -12,7 +12,7 @@ logger.warning('this is a log message')
 
 config = dict(
     aws_region='eu-west-1',
-    buffer_size_limit=100000,
+    buffer_size_limit=100,
     buffer_time_limit=0.2,
     kinesis_concurrency=1,
     kinesis_max_retries=10,
@@ -42,7 +42,7 @@ while True:
     k.send(line)
 
     print("Sleeping.")
-    time.sleep(1)
+    time.sleep(0.4)
   
 file1.close() 
 

@@ -47,11 +47,11 @@ def ring_the_bell(anomaly_list_sum,sum_treshold):
 
 for message in consumer:
     #print "Received message: {0}".format(message)
-    print (message["Data"])
+    #print (message["Data"])
     string = message["Data"]
     commacount = string.count(',')
     endlinecount = string.count('\n')
-    print "Message: {0}, comma count: {1} endline count: {2}".format(message_count,commacount,endlinecount)
+    #print "Message: {0}, comma count: {1} endline count: {2}".format(message_count,commacount,endlinecount)
     message_count += 1 
 
     # Now treat it like numbers, I assume that each data field can contain anomaly scores delimited by \n or ,
@@ -62,19 +62,21 @@ for message in consumer:
 
     for current_reading in readings:
         current_reading = float(current_reading)
-        print "Current reading: {0}".format(current_reading)
-        print "List has size of: {0}".format(len(anomaly_list))
+        #print "Current reading: {0}".format(current_reading)
+        #print "List has size of: {0}".format(len(anomaly_list))
+        #print "Current reading: {0}, List has size of: {1}".format(current_reading,len(anomaly_list))
         if len(anomaly_list) > size_treshold:
-            print "Removing element from the beggining of the list list"
+            #print "Removing element from the beggining of the list list"
             anomaly_list.pop(0)
-        print "Add element to the list"
+        #print "Add element to the list"
         anomaly_list.append(current_reading)
         anomaly_list_sum = sum(anomaly_list)
+        #print "Sum of the elements in the list: {0} treshold: {1}".format(anomaly_list_sum,sum_treshold)
         print "Sum of the elements in the list: {0} treshold: {1}".format(anomaly_list_sum,sum_treshold)
         if anomaly_list_sum > sum_treshold:
             print "WULF"
             print "WULF"
             print "WULF"
-            ring_the_bell(anomaly_list_sum,sum_treshold)
+            #ring_the_bell(anomaly_list_sum,sum_treshold)
 
     

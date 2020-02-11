@@ -1,0 +1,51 @@
+{
+    "ApplicationName": "anomaly_analytics1", 
+    "ApplicationDescription": "", 
+    "Inputs": [
+        {
+            "NamePrefix": "SOURCE_SQL_STREAM", 
+            "KinesisStreamsInput": {
+                "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/kinesis_input_stream_temp", 
+                "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
+            }, 
+            "InputParallelism": {
+                "Count": 1
+            }, 
+            "InputSchema": {
+                "RecordFormat": {
+                    "RecordFormatType": "CSV", 
+                    "MappingParameters": {
+                        "CSVMappingParameters": {
+                            "RecordRowDelimiter": "\n", 
+                            "RecordColumnDelimiter": ","
+                        }
+                    }
+                }, 
+                "RecordEncoding": "UTF-8", 
+                "RecordColumns": [
+                    {
+                        "Name": "COL0", 
+                        "SqlType": "DOUBLE"
+                    },
+                    {
+                        "Name": "COL1", 
+                        "SqlType": "DOUBLE"
+                    }
+                ]
+            }
+        }
+    ], 
+    "Outputs": [
+        {
+            "Name": "DESTINATION_SQL_STREAM", 
+            "KinesisStreamsOutput": {
+                "ResourceARN": "arn:aws:kinesis:eu-west-1:172748671118:stream/anomaly_output_stream", 
+                "RoleARN": "arn:aws:iam::172748671118:role/kinesis-analytics-remi-universal"
+            }, 
+            "DestinationSchema": {
+                "RecordFormatType": "CSV"
+            }
+        }
+    ], 
+    "ApplicationCode": "-- ** Anomaly detection **\r\n-- Compute an anomaly score for each record in the source stream using Random Cut Forest\r\n-- Creates a temporary stream and defines a schema\r\nCREATE OR REPLACE STREAM \"TEMP_STREAM\" (\r\n   \"column1\"        DOUBLE,\r\n   \"column2\"        DOUBLE,\r\n \"ANOMALY_SCORE\"  DOUBLE);\r\n-- Creates an output stream and defines a schema\r\nCREATE OR REPLACE STREAM \"DESTINATION_SQL_STREAM\" (\r\n   \"ANOMALY_SCORE\"  DOUBLE);\r\n\r\n-- Compute an anomaly score for each record in the source stream\r\n-- using Random Cut Forest\r\nCREATE OR REPLACE PUMP \"STREAM_PUMP\" AS INSERT INTO \"TEMP_STREAM\"\r\nSELECT STREAM \"COL0\",\"COL1\", \"ANOMALY_SCORE\" FROM\r\n  TABLE(RANDOM_CUT_FOREST(\r\n    CURSOR(SELECT STREAM * FROM \"SOURCE_SQL_STREAM_001\"),100,256,100000,1\r\n  )\r\n);\r\n-- Sort records by descending anomaly score, insert into output stream\r\nCREATE OR REPLACE PUMP \"OUTPUT_PUMP\" AS INSERT INTO \"DESTINATION_SQL_STREAM\"\r\nSELECT STREAM \"ANOMALY_SCORE\" FROM \"TEMP_STREAM\"\r\nORDER BY FLOOR(\"TEMP_STREAM\".ROWTIME TO SECOND), ANOMALY_SCORE DESC;\n"
+}
