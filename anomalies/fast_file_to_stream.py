@@ -42,7 +42,7 @@ while True:
     k.send(line)
 
     print("Sleeping.")
-    time.sleep(0.4)
+    time.sleep(0.9)
   
 file1.close() 
 

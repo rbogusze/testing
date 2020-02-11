@@ -7,6 +7,7 @@ from kinesis.consumer import KinesisConsumer
 import sys
 import logging
 import requests
+import time
 
 logging.basicConfig()
 logger = logging.getLogger('logger')
@@ -24,6 +25,21 @@ size_sum = 0
 size_count = 0
 sum_sum = 0
 anomaly_list = []
+last_time_bell_was_rung = 0
+
+def ring_the_bell_with_backoff(anomaly_list_sum,sum_treshold):
+    print("Inside ring_the_bell_with_backoff")
+    epoch_time = int(time.time())
+    print(epoch_time)
+    global last_time_bell_was_rung
+    if epoch_time - last_time_bell_was_rung > 10:
+        print "Wulf was called: {0} seconds ago. Doing that again.".format((epoch_time - last_time_bell_was_rung))
+        last_time_bell_was_rung = epoch_time
+        ring_the_bell(anomaly_list_sum,sum_treshold)
+    else:
+        print "Wulf was called: {0} seconds ago. Silent for a while.".format((epoch_time - last_time_bell_was_rung))
+      
+    
 
 def ring_the_bell(anomaly_list_sum,sum_treshold):
     print("Inside ring_the_bell")
@@ -78,5 +94,6 @@ for message in consumer:
             print "WULF"
             print "WULF"
             #ring_the_bell(anomaly_list_sum,sum_treshold)
+            ring_the_bell_with_backoff(anomaly_list_sum,sum_treshold)
 
     
