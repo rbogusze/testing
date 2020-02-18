@@ -21,6 +21,7 @@ def search_request():
                     "fields": [
                         "url", 
                         "title", 
+                        "text", 
                         "tags"
                     ] 
                 }

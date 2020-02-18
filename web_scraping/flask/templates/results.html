@@ -44,6 +44,7 @@
         <th>Date Stamp</th>
         <th>Source</th>
         <th>Title</th>
+        <th>Text</th>
         <th>Tags</th>
       </tr>
     </thead>
@@ -54,6 +55,7 @@
         <th scope="row">{{ hit['_source']['date'] }}</th>
           <td>{{ hit['_index'] }}</td>
           <td><a href="{{ hit['_source']['url'] }}">{{ hit['_source']['title'] }}</a></td>
+          <td>{{ hit['_source']['text'] }}</td>
           <td>{{ hit['_source']['tags'] }}</td>
       </tr>
     </tbody>
