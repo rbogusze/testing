@@ -1,1 +1,3 @@
 flask/nohup.out
+tutorial/tutorial/spiders/*.pyc
+
