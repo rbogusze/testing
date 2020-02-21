@@ -1,3 +1,4 @@
 flask/nohup.out
 tutorial/tutorial/spiders/*.pyc
+tutorial/tutorial/scraped_content.txt
 
