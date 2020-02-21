@@ -1,5 +1,6 @@
 import re
 import textract
+import codecs
 from itertools import chain
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
@@ -43,19 +44,21 @@ class ItsyBitsySpider(CrawlSpider):
                 extracted_data = extracted_data.decode('utf-8')
                 extracted_data = CONTROL_CHAR_RE.sub('', extracted_data)
                 tempfile.close()
-		with open("scraped_content.txt", "a") as f:
-                    f.write(response.url.upper())
-                    f.write("\n")
-                    f.write(extracted_data.encode('utf-8').strip())
-                    f.write("\n\n")
+		#with codecs.open("scraped_content.txt", "a", encoding='utf-8') as f:
+                #    f.write(response.url.encode('utf-8').upper())
+                #    f.write("\n")
+                #    f.write(extracted_data.encode('utf-8').strip())
+                #    f.write("\n\n")
+
                 yield {
                     'date': "2020-01-01",
-                    'url': response.url,
+                    'url': response.url.strip(),
                     'title': "Title",
-                    'text': extracted_data.encode('utf-8').strip(),
+                    'text': extracted_data.strip(),
                     'author': "Author",
                     'tags': "Tags",
                 }
+
 
 
 
