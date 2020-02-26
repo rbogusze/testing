@@ -1,6 +1,7 @@
 import re
 import textract
 import codecs
+import datetime
 from itertools import chain
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
@@ -8,6 +9,10 @@ from tempfile import NamedTemporaryFile
 control_chars = ''.join(map(chr, chain(range(0, 9), range(11, 32), range(127, 160))))
 CONTROL_CHAR_RE = re.compile('[%s]' % re.escape(control_chars))
 TEXTRACT_EXTENSIONS = [".pdf", ".doc", ".docx", ""]
+
+# default value for date
+date = "1999-01-01"
+
 class CustomLinkExtractor(LinkExtractor):
     def __init__(self, *args, **kwargs):
         super(CustomLinkExtractor, self).__init__(*args, **kwargs)
@@ -26,7 +31,22 @@ class ItsyBitsySpider(CrawlSpider):
         super(ItsyBitsySpider, self).__init__(*args, **kwargs)
 
     def parse_item(self, response):
+
+
+
         if hasattr(response, "text"):
+            # First let's find out the publication date
+            print('Hello--------------')
+            table = response.xpath('//*[@class="table"]//tbody')
+            rows = table.xpath('//tr')
+            for row in rows:
+                print (row)
+                if row.css('th::text').get() == "Data i godzina publikacji:":
+                    #date = row.css('td::text').get()
+                    date = datetime.datetime.strptime(row.css('td::text').get(), "%d.%m.%Y %H:%M").strftime("%Y-%m-%d")
+                    print ("BINGO: {}".format(date))
+            print('/Hello--------------')
+
             # The response is text - we assume html. Normally we'd do something
             # with this, but this demo is just about binary content, so...
             pass
@@ -50,8 +70,10 @@ class ItsyBitsySpider(CrawlSpider):
                 #    f.write(extracted_data.encode('utf-8').strip())
                 #    f.write("\n\n")
 
+                global date
+
                 yield {
-                    'date': "2020-01-01",
+                    'date': date,
                     'url': response.url.strip(),
                     'title': "Title",
                     'text': extracted_data.strip(),
