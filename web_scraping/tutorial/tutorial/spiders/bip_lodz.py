@@ -13,7 +13,6 @@ class QuotesSpider(scrapy.Spider):
 
         # here I can do everything that I can do in interactive mode
         title = response.css('title::text').get()
-        date = datetime.date.today()
 
         #print('Hello--------------')
         #print(dir(response.request))
@@ -27,6 +26,11 @@ class QuotesSpider(scrapy.Spider):
             base_url = urlparse.urljoin(response.request.url, '/')
 
             print('Hello--------------')
+            print('date:')
+            #date = quote.css('time::text').get().strip()
+            date = datetime.datetime.strptime(quote.css('time::text').get().strip(), "%d.%m.%Y").strftime("%Y-%m-%d")
+            #date = datetime.date.today()
+            print(date)
             print('url:')
             print(response.request.url)
             print(base_url)
