@@ -1,7 +1,6 @@
 #!/bin/sh
-echo "Checking if you are misbehaving :)"
-echo "it should be easy, but will see"
-echo "Now running with sh, on:"
+echo "Checking if there are java processess that are running with debug enabled."
+echo "They are opening remote debug port, which is considered as security incident."
 uname -a
 date
 
