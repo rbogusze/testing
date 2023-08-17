@@ -6,7 +6,7 @@ uname -a
 date
 
 PROC_WITH_DEBUG=`ps -ef | grep -e "Xdebug" -e "Xrunjdwp" -e "agentlib:jdwp" | grep -v grep`
-PROC_WITH_DEBUG_COUNT=`echo ${PROC_WITH_DEBUG} | wc -l`
+PROC_WITH_DEBUG_COUNT=`echo ${PROC_WITH_DEBUG} | grep -v "^$" | wc -l`
 echo "[debug] PROC_WITH_DEBUG: ${PROC_WITH_DEBUG}"
 echo "[debug] PROC_WITH_DEBUG_COUNT: ${PROC_WITH_DEBUG_COUNT}"
 if [ "${PROC_WITH_DEBUG_COUNT}" -gt 0 ]; then
